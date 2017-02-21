@@ -187,7 +187,11 @@ def checkImmediateOrders():
     time.sleep(10)
     pass
 
-def recreateCharts():
+def recreateCharts(custom_signals=False):
+    if custom_signals:
+        #script to run vol_adjsize, vol_adjsize_moclive_func
+        pass
+
     time.sleep(15)
     pass
 

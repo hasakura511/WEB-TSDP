@@ -110,12 +110,16 @@ def board(request):
     if 'True' in [order[1] for sys, order in eval(selections[0].selection).items()]:
         print('Immediate Orders found')
         checkImmediateOrders()
-
+    '''
     # Please wait 10-15 minutes for the charts to be recreated.
-    if selections[0].dic()['componentloc']!=selections[1].dic()['componentloc']:
-        print('New Board config found')
+    if selections[0].dic()['componentloc']!=selections[1].dic()['componentloc'] or\
+            request.GET['custom_signals']=='True':
+        if request.GET['custom_signals']=='True':
+            print('New Custom Signals Found')
+        else:
+            print('New Board config found')
         recreateCharts()
-
+    '''
     updateMeta()
     getAccountValues()
 
