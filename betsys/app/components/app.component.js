@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7,19 +8,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-export let AppComponent = class AppComponent {
-    constructor(router) {
+var core_1 = require('@angular/core');
+var router_1 = require('@angular/router');
+var app_component_html_1 = require('./app.component.html');
+var AppComponent = (function () {
+    function AppComponent(router) {
         this.router = router;
     }
-};
-AppComponent = __decorate([
-    Component({
-        // moduleId : module.id,
-        selector: 'bet-app',
-        templateUrl: 'app.component.html',
-        styleUrls: ['app.component.css']
-    }), 
-    __metadata('design:paramtypes', [Router])
-], AppComponent);
+    AppComponent = __decorate([
+        core_1.Component({
+            // moduleId : module.id,
+            selector: 'bet-app',
+            template: app_component_html_1.htmlTemplate
+        }), 
+        __metadata('design:paramtypes', [router_1.Router])
+    ], AppComponent);
+    return AppComponent;
+}());
+exports.AppComponent = AppComponent;

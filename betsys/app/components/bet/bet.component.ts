@@ -2,13 +2,14 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NgStyle } from '@angular/common'
 import { Router } from '@angular/router';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
-import { Http, Response, Headers, RequestOptions } from '@angular/http'
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { htmlTemplate } from './bet.component.html';
+
  
 @Component({
     // moduleId : module.id,
     selector : 'relative-path',
-    templateUrl : 'bet.component.html',
-    styleUrls : ['bet.component.css']
+    template : htmlTemplate
 })
 
 export class BetComponent {
@@ -24,7 +25,7 @@ export class BetComponent {
     user = {
         name : "Hidemi Asakura",
         avatarURL : "/static/public/images/avatar.png",
-        version : "0.0.4.2",
+        version : "0.0.5.0",
     };
 
     // DOM of interface..
@@ -606,7 +607,7 @@ export class BetComponent {
             this.dragAccounts[i].prevDragRow = -1;
             this.dragAccounts[i].display = "table-cell";
             this.dragAccounts[i].nextBet = "Off";
-            this.dragAccounts[i].orderType = "Off";
+            this.dragAccounts[i].orderType = "MOC 20170130";
             this.dragAccounts[i].iNextBet = -1;
             this.dragAccounts[i].iOrderType = -1;
             this.dragAccounts[i].dragOrder = -1;
@@ -621,8 +622,8 @@ export class BetComponent {
             this.condCells[3][i].dragItem = [-1, -1, -1];
             this.condCells[1][i].dragItem = [-1, -1, -1];
             this.condCells[1][i + 3].dragItem = [-1, -1, -1];
-
         }
+
         // Reset for main_cond..
         this.condCells[0][0].dragItem = [-1, -1, -1];
         this.condCells[0][1].dragItem = [-1, -1, -1];
@@ -1055,13 +1056,28 @@ export class BetComponent {
         return JSON.stringify(jsonData);
     }
 
+    //Reset the order type label in the API params before invoking
+    //Since we display the ordertype as MOC 20170130 as a default order type on clicking Clear All Bets
+    //But we need to pass OrderType as "off" in these cases
+    setOrderTypeBeforeAPI(dragAccountItem) {
+        if(dragAccountItem.iOrderType === -1 && dragAccountItem.orderType === "MOC 20170130") {
+            dragAccountItem.orderType = "Off"; 
+        }
+    }
+
     structData() {
+
         // For db_selection..
         var mic_account = this.dragAccounts[0];
+        this.setOrderTypeBeforeAPI(mic_account);
         var mic_draggedPane = this.draggedBetJSON(mic_account.dragCol, mic_account.dragRow, mic_account.iNextBet, mic_account.iOrderType);
+        
         var min_account = this.dragAccounts[1];
+        this.setOrderTypeBeforeAPI(min_account);
         var min_draggedPane = this.draggedBetJSON(min_account.dragCol, min_account.dragRow, min_account.iNextBet, min_account.iOrderType);
+        
         var fut_account = this.dragAccounts[2];
+        this.setOrderTypeBeforeAPI(fut_account);
         var fut_draggedPane = this.draggedBetJSON(fut_account.dragCol, fut_account.dragRow, fut_account.iNextBet, fut_account.iOrderType);
 
         this.db_Selection = {

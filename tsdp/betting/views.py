@@ -50,7 +50,6 @@ def getrecords(request):
     # records = [ dict((cn, getattr(data, cn)) for cn in ('v4futures', 'v4mini')) for data in UserSelection.objects.all() ]
     # print(records)
     # return HttpResponse(json.dumps(records))
-
     firstrec = UserSelection.objects.order_by('-timestamp').first()
     if firstrec == None:
         record = UserSelection(userID=json.dumps(UserSelection.default_userid),
@@ -99,8 +98,9 @@ def getrecords(request):
     # print(json.dumps(firstdata))
     recent = UserSelection.objects.order_by('-timestamp')[:20]
     recentdata = [dict((cn, getattr(data, cn)) for cn in ('timestamp', 'mcdate', 'selection')) for data in recent]
-
-    return HttpResponse(json.dumps({"first": firstdata, "recent": recentdata}))
+    returndata={"first": firstdata, "recent": recentdata}
+    #print(returndata)
+    return HttpResponse(json.dumps(returndata))
 
 
 def board(request):
@@ -120,21 +120,20 @@ def board(request):
             print('New Board config found')
         recreateCharts()
     '''
-    updateMeta()
-    getAccountValues()
-
     return render(request, 'index.html', {})
 
 def newboard(request):
     return render(request, 'newboard.html', {})
 
 def getmetadata(request):
-    returnrec = MetaData.objects.order_by('-timestamp').first()
-    returndata = returnrec.dic()
+    #returnrec = MetaData.objects.order_by('-timestamp').first()
+    #returndata = returnrec.dic()
+    returndata=updateMeta()
     print(returndata)
     return HttpResponse(json.dumps(returndata))
 
 def getaccountdata(request):
+    getAccountValues()
     returnrec = AccountData.objects.order_by('-timestamp').first()
     returndata = returnrec.dic()
     print(returndata)

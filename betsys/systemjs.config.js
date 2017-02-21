@@ -28,8 +28,8 @@
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js',
       'moment' : 'node_modules/moment/moment.js',
       'ng2-bootstrap/ng2-bootstrap' : 'node_modules/ng2-bootstrap/bundles/ng2-bootstrap.umd.js',
-      'ng2-dnd' : 'node_modules/ng2-dnd',
-      'ng2-bs3-modal': 'node_modules/ng2-bs3-modal',
+      'ng2-dnd' : 'node_modules/ng2-dnd/bundles',
+      'ng2-bs3-modal': 'node_modules/ng2-bs3-modal'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -41,7 +41,7 @@
         defaultExtension: 'js'
       },
       'ng2-dnd' : {
-        main:'./index.js',
+        main:'./index.umd.js',
         defaultExtension : 'js'
       },
       'ng2-bs3-modal' : {

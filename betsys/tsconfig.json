@@ -3,19 +3,21 @@
     "target": "es5",
     "module": "commonjs",
     "moduleResolution": "node",
-    "sourceMap": true,
+    "outDir": "app",
+    "sourceMap": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "removeComments": false,
-    "noImplicitAny": false,
-    "typeRoots" : ["./node_modules/@types", "./node_modules/@types-es5", "./node_modules"],
-    "types" : [
-      "jasmine",
-      "core-js",
-      "node"
-    ]
+    "noImplicitAny": false
   },
+  "exclude": [
+    "node_modules"
+  ],
   "files": [
     "app/main.ts"
+  ],
+  "filesGlob": [
+    "app/**/*.ts",
+    "typings/*.d.ts"
   ]
 }

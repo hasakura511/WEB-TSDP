@@ -105,7 +105,21 @@ def getComponents():
                     }
     return ComponentsDict
 
-def updateMeta():
+def getAntiComponents():
+    componentpairs =[
+                ['Previous','Anti-Previous'],
+                ['RiskOn','RiskOff'],
+                ['Custom','Anti-Custom'],
+                ['50/50','Anti50/50'],
+                ['LowestEquity','AntiLowestEquity'],
+                ['HighestEquity','AntiHighestEquity'],
+                ['Seasonality','Anti-Seasonality'],
+                ]
+    anti_component_dict={l[0]:l[1] for l in componentpairs}
+    anti_component_dict.update({l[1]:l[0] for l in componentpairs})
+    return anti_component_dict
+
+def updateMeta(): 
     readConn = getBackendDB()
     mcdate=MCdate()
     timetables = pd.read_sql('select * from timetable', con=readConn, index_col='Desc')
@@ -117,10 +131,18 @@ def updateMeta():
     triggers.columns = [['Triggertime']]
     triggers['Group']=futuresDict.ix[triggers.index].Group.values
     triggers['Date']=mcdate
-    record = MetaData(components=json.dumps(getComponents()), triggers=json.dumps(triggers.transpose().to_dict()),\
-                                    mcdate=mcdate,\
-                                    timestamp=getTimeStamp())
-    record.save()
+    #record = MetaData(components=json.dumps(getComponents()), triggers=json.dumps(triggers.transpose().to_dict()),\
+    #                                mcdate=mcdate,\
+    #                                timestamp=getTimeStamp())
+    #record.save()
+    
+    metadata= {'components':getComponents(),'anticomponents':getAntiComponents(),
+                         'triggers':triggers.transpose().to_dict(),
+                                    'mcdate':mcdate, 'timestamp':getTimeStamp()}
+    return metadata
+    
+
+
     
 def getAccountValues():
     readConn = getBackendDB()

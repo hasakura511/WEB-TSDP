@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7,23 +8,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { BetComponent } from './components/bet/bet.component';
-const appRoutes = [
-    { path: '', component: BetComponent },
-    { path: 'bet', component: BetComponent },
+var core_1 = require('@angular/core');
+var router_1 = require('@angular/router');
+var bet_component_1 = require('./components/bet/bet.component');
+var appRoutes = [
+    { path: '', component: bet_component_1.BetComponent },
+    { path: 'bet', component: bet_component_1.BetComponent },
 ];
-export let AppRouterModule = class AppRouterModule {
-};
-AppRouterModule = __decorate([
-    NgModule({
-        imports: [
-            RouterModule.forRoot(appRoutes)
-        ],
-        exports: [
-            RouterModule
-        ]
-    }), 
-    __metadata('design:paramtypes', [])
-], AppRouterModule);
+var AppRouterModule = (function () {
+    function AppRouterModule() {
+    }
+    AppRouterModule = __decorate([
+        core_1.NgModule({
+            imports: [
+                router_1.RouterModule.forRoot(appRoutes)
+            ],
+            exports: [
+                router_1.RouterModule
+            ]
+        }), 
+        __metadata('design:paramtypes', [])
+    ], AppRouterModule);
+    return AppRouterModule;
+}());
+exports.AppRouterModule = AppRouterModule;

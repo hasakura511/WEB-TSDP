@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { htmlTemplate } from './app.component.html';
 
 @Component({
     // moduleId : module.id,
     selector: 'bet-app',
-    templateUrl:'app.component.html',
-    styleUrls : ['app.component.css']
+    template: htmlTemplate
 })
 
 export class AppComponent {

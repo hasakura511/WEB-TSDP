@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7,15 +8,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
-import { Http, Headers, RequestOptions } from '@angular/http';
-export let BetComponent = class BetComponent {
+var core_1 = require('@angular/core');
+var router_1 = require('@angular/router');
+var ng2_bs3_modal_1 = require('ng2-bs3-modal/ng2-bs3-modal');
+var http_1 = require('@angular/http');
+var bet_component_html_1 = require('./bet.component.html');
+var BetComponent = (function () {
     /*-------------------------------------------------------------------*/
     /*---------------------------- Functions ----------------------------*/
     /*-------------------------------------------------------------------*/
-    constructor(router, http) {
+    function BetComponent(router, http) {
         this.router = router;
         this.http = http;
         /*-------------------------------------------------------------------*/
@@ -263,7 +265,7 @@ export let BetComponent = class BetComponent {
         // this.parseAccountData("");
     }
     // Set size of left pane and account image..
-    onResize(event, idx) {
+    BetComponent.prototype.onResize = function (event, idx) {
         /*
             idx : 0 -> table cell,
             idx : 1 -> pane1 cell,
@@ -306,13 +308,13 @@ export let BetComponent = class BetComponent {
                     break;
             }
         }
-    }
-    ngAfterViewInit() {
+    };
+    BetComponent.prototype.ngAfterViewInit = function () {
         // Set initial size..
         console.log("Initialilzed Finished");
         this.onResize(null, 0);
-    }
-    onDropSuccess($event, idCol, idRow) {
+    };
+    BetComponent.prototype.onDropSuccess = function ($event, idCol, idRow) {
         this.onResize(null, 0);
         this.isChartBox1 = false;
         this.isChartBox2 = false;
@@ -425,9 +427,9 @@ export let BetComponent = class BetComponent {
             this.cfgModalOff.open();
         }
         this.onResize(null, idx);
-    }
+    };
     // Voting dialog..
-    cfgModalTextStyle(maintype, subtype, styletype) {
+    BetComponent.prototype.cfgModalTextStyle = function (maintype, subtype, styletype) {
         if (maintype == 0) {
             if (subtype == this.voteType) {
                 if (styletype == 0) {
@@ -488,8 +490,8 @@ export let BetComponent = class BetComponent {
                 }
             }
         }
-    }
-    onOKVote() {
+    };
+    BetComponent.prototype.onOKVote = function () {
         var account = this.dragAccounts[this.curDragIdx];
         // For off pane..
         if (this.voteText == "") {
@@ -519,8 +521,8 @@ export let BetComponent = class BetComponent {
         }
         account.iOrderType = this.entryType;
         console.log("[Bet.Component] Object Finished : ", this.dragAccounts[this.curDragIdx]);
-    }
-    onCancelVote() {
+    };
+    BetComponent.prototype.onCancelVote = function () {
         var account = this.dragAccounts[this.curDragIdx];
         console.log("[Bet.Component] Drag : ", account.dragCol, account.dragRow);
         var idCol = account.dragCol;
@@ -542,8 +544,8 @@ export let BetComponent = class BetComponent {
         account.dragCol = -1;
         account.dragRow = -1;
         account.display = "table-cell";
-    }
-    onReset() {
+    };
+    BetComponent.prototype.onReset = function () {
         for (var i = 0; i < 3; i++) {
             // Reset for off panel and drag account information..
             this.dragAccounts[i].dragCol = -1;
@@ -572,9 +574,9 @@ export let BetComponent = class BetComponent {
         // Reset for chart dialog..
         this.isChartBox1 = false;
         this.isChartBox2 = false;
-    }
+    };
     /*------------------------- For cell in table ---------------------------------*/
-    topBorderRadius(idx, flag) {
+    BetComponent.prototype.topBorderRadius = function (idx, flag) {
         // Return border radius..
         if ((idx == 0 && flag == 0) || (idx == 11 && flag == 1)) {
             return 26;
@@ -582,8 +584,8 @@ export let BetComponent = class BetComponent {
         else {
             return 0;
         }
-    }
-    cellInfo_ImageMargin(idxPanel) {
+    };
+    BetComponent.prototype.cellInfo_ImageMargin = function (idxPanel) {
         // Return image margin..
         if (idxPanel == 0) {
             return this.betCellImgMarginLeft + "px";
@@ -594,9 +596,9 @@ export let BetComponent = class BetComponent {
         else if (idxPanel == 2) {
             return this.bpaneCellImgMarginLeft + "px";
         }
-    }
+    };
     // Get informiation of account according to type..
-    cellInfo(idCol, idRow, infoType, idxBetCell) {
+    BetComponent.prototype.cellInfo = function (idCol, idRow, infoType, idxBetCell) {
         /*
             infoType = 0 : Get image of account,
             infoType = 1 : Get Text of account,
@@ -662,9 +664,9 @@ export let BetComponent = class BetComponent {
                 return dragRegion;
             }
         }
-    }
+    };
     /*------------------------- For information of time ---------------------------------*/
-    curTimeWithType(type) {
+    BetComponent.prototype.curTimeWithType = function (type) {
         /*
             type = 0 : 20161201,                    - Entry time..
             type = 1 : 2016/12/01 09:00:00 EST,     - Time stamp..
@@ -714,11 +716,12 @@ export let BetComponent = class BetComponent {
             strDate = nYear + "/" + nMonth + "/" + nDay + " " + nHour + ":" + nMin + ":" + nSec + " EST";
         }
         return strDate;
-    }
-    curTimer() {
-        setTimeout(() => { this.currentTime(); }, 1000);
-    }
-    currentTime() {
+    };
+    BetComponent.prototype.curTimer = function () {
+        var _this = this;
+        setTimeout(function () { _this.currentTime(); }, 1000);
+    };
+    BetComponent.prototype.currentTime = function () {
         var now = new Date();
         var estMiliTime = now.getTime() + (now.getTimezoneOffset() - 300) * 60000;
         var estTime = new Date(estMiliTime);
@@ -742,8 +745,8 @@ export let BetComponent = class BetComponent {
         }
         this.getNextTriggerTime();
         this.curTimer();
-    }
-    getNextTriggerTime() {
+    };
+    BetComponent.prototype.getNextTriggerTime = function () {
         var now = new Date();
         var estMiliTime = now.getTime() + (now.getTimezoneOffset() - 300) * 60000;
         var estTime = new Date(estMiliTime);
@@ -787,8 +790,8 @@ export let BetComponent = class BetComponent {
         if (this.nextTriggerTimePane != undefined) {
             this.nextTriggerTimePane.nativeElement.innerHTML = this.nextTriggerTime;
         }
-    }
-    getImmediateTime(mcdate) {
+    };
+    BetComponent.prototype.getImmediateTime = function (mcdate) {
         var mcyear = mcdate.substring(0, 4);
         var mcmonth = mcdate.substring(4, 6);
         var mcday = mcdate.substring(6);
@@ -828,8 +831,8 @@ export let BetComponent = class BetComponent {
         // }
         // console.log("[Bet.Component] Immediate Time ->", strDate);
         return strDate;
-    }
-    timeFromTimeStamp(timestamp) {
+    };
+    BetComponent.prototype.timeFromTimeStamp = function (timestamp) {
         // console.log("[Bet.Component] UTC Stamp to EST : ", timestamp);
         var now = new Date();
         var offset = now.getTimezoneOffset() - 300;
@@ -843,8 +846,8 @@ export let BetComponent = class BetComponent {
         var nSec = estTime.getSeconds() >= 10 ? estTime.getSeconds() : "0" + estTime.getSeconds();
         var strDate = mYear + "/" + mMonth + "/" + mDay + "  " + nHour + ":" + nMin + ":" + nSec + " EST";
         return strDate;
-    }
-    estTimeFromUTCStamp(timestamp) {
+    };
+    BetComponent.prototype.estTimeFromUTCStamp = function (timestamp) {
         var nowTime = new Date();
         // console.log("[Bet.Component] UTC Stamp to EST : ", timestamp);
         var timeValue = parseInt(timestamp) * 1000;
@@ -857,8 +860,8 @@ export let BetComponent = class BetComponent {
         var nSec = estTime.getSeconds() >= 10 ? estTime.getSeconds() : "0" + estTime.getSeconds();
         var strDate = mYear + "/" + mMonth + "/" + mDay + "  " + nHour + ":" + nMin + ":" + nSec + " EST";
         return strDate;
-    }
-    formatNumber(number, digit) {
+    };
+    BetComponent.prototype.formatNumber = function (number, digit) {
         var step = 10;
         var strPrefix = "";
         for (var i = 1; i < digit; i++) {
@@ -876,15 +879,16 @@ export let BetComponent = class BetComponent {
             }
         }
         return strNumber;
-    }
+    };
     /*------------------------- For Database ---------------------------------*/
-    onConfirmGET() {
+    BetComponent.prototype.onConfirmGET = function () {
+        var _this = this;
         // Reset for chart dialog..
         this.isChartBox1 = false;
         this.isChartBox2 = false;
         this.structData();
-        let header = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: header });
+        var header = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: header });
         var body = this.baseURL + '/addrecord?user_id=' + 32 +
             '&Selection=' + encodeURIComponent(JSON.stringify(this.db_Selection)) +
             '&v4micro=' + encodeURIComponent(JSON.stringify(this.db_v4micro)) +
@@ -893,34 +897,35 @@ export let BetComponent = class BetComponent {
             '&componentloc=' + encodeURIComponent(JSON.stringify(this.db_componentloc));
         console.log(body);
         // this.confirmDialog("Save", 1);
-        return this.http.get(body).subscribe(response => {
-            this.test_value2 = JSON.stringify(response);
-            this.confirmBtnText = "Process Orders";
-            this.confirmDialog("Successfully saved!", 1);
+        return this.http.get(body).subscribe(function (response) {
+            _this.test_value2 = JSON.stringify(response);
+            _this.confirmBtnText = "Process Orders";
+            _this.confirmDialog("Successfully saved!", 1);
             console.log("[Bet.Componenet] Post Result Success : ", response);
-        }, error => {
-            this.alarmDialog("Error on confirm! Can't save it to the database!", "OK");
-            this.test_value2 = "Error Code : " + error;
+        }, function (error) {
+            _this.alarmDialog("Error on confirm! Can't save it to the database!", "OK");
+            _this.test_value2 = "Error Code : " + error;
             console.log("[Bet.Componenet] Post Result Error : ", error);
         });
-    }
-    onConfirmPOST() {
-        let header = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: header });
+    };
+    BetComponent.prototype.onConfirmPOST = function () {
+        var _this = this;
+        var header = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: header });
         var apiURL = this.baseURL + "/addrecord";
         var body = this.db_JSON_Stringify();
         console.log(document.cookie);
-        return this.http.post(apiURL, body, options).subscribe(response => {
-            this.test_value2 = JSON.stringify(response);
-            this.alarmDialog("Successfully saved!", "Process Orders");
+        return this.http.post(apiURL, body, options).subscribe(function (response) {
+            _this.test_value2 = JSON.stringify(response);
+            _this.alarmDialog("Successfully saved!", "Process Orders");
             console.log("[Bet.Componenet] Post Result Success : ", response);
-        }, error => {
-            this.alarmDialog("Error on confirm! Can't save it to the database!", "OK");
-            this.test_value2 = "Error Code : " + error;
+        }, function (error) {
+            _this.alarmDialog("Error on confirm! Can't save it to the database!", "OK");
+            _this.test_value2 = "Error Code : " + error;
             console.log("[Bet.Componenet] Post Result Error : ", error);
         });
-    }
-    db_JSON_Stringify() {
+    };
+    BetComponent.prototype.db_JSON_Stringify = function () {
         // For get mothod..
         // var jsonURL =   '/addrecord?user_id=' + userID + 
         //                 '&Selection=' + encodeURIComponent(JSON.stringify(this.db_Selection)) +
@@ -939,8 +944,8 @@ export let BetComponent = class BetComponent {
             'v4micro': this.db_v4micro,
         };
         return JSON.stringify(jsonData);
-    }
-    structData() {
+    };
+    BetComponent.prototype.structData = function () {
         // For db_selection..
         var mic_account = this.dragAccounts[0];
         var mic_draggedPane = this.draggedBetJSON(mic_account.dragCol, mic_account.dragRow, mic_account.iNextBet, mic_account.iOrderType);
@@ -966,9 +971,9 @@ export let BetComponent = class BetComponent {
         // For db_componentloc..
         this.db_componentloc = this.curComponentLoc();
         console.log("[Bet.Component] Location Dict:", this.db_componentloc);
-    }
+    };
     // Get dragged down pane information..
-    draggedBetJSON(col, row, nextBet, orderType) {
+    BetComponent.prototype.draggedBetJSON = function (col, row, nextBet, orderType) {
         var condID = -1;
         var jsonAry = [];
         var jsonBet = "";
@@ -1015,9 +1020,9 @@ export let BetComponent = class BetComponent {
         jsonAry.push(jsonBet);
         jsonAry.push(jsonOrder);
         return jsonAry;
-    }
+    };
     // Get pane information..
-    draggedPaneJSON(userNum) {
+    BetComponent.prototype.draggedPaneJSON = function (userNum) {
         var paneJSON = {};
         var jsonKey = '';
         var jsonValue = [];
@@ -1078,8 +1083,8 @@ export let BetComponent = class BetComponent {
             }
         }
         return paneJSON;
-    }
-    curComponentLoc() {
+    };
+    BetComponent.prototype.curComponentLoc = function () {
         var locDict = [];
         locDict.push({ 'c0': 'Off' });
         var startPT = [0, 2, 8];
@@ -1107,48 +1112,51 @@ export let BetComponent = class BetComponent {
             }
         }
         return locDict;
-    }
+    };
     /*------------------------- For retriving data from server ---------------------------------*/
-    getPreviousBettingInfo() {
+    BetComponent.prototype.getPreviousBettingInfo = function () {
+        var _this = this;
         var body = this.baseURL + '/getrecords';
         console.log("[Bet.Component] Previous Bet HTTP : ", body);
-        return this.http.get(body).subscribe(response => {
+        return this.http.get(body).subscribe(function (response) {
             var jsonData = response.json() || {};
             console.log("[Bet.Componenet] GET Betting Result Success : ", jsonData);
-            this.parseBetInfo(jsonData);
-        }, error => {
-            this.alarmDialog("Error on loading betting data!", "OK");
-            this.test_value2 = "Error Code : " + error;
+            _this.parseBetInfo(jsonData);
+        }, function (error) {
+            _this.alarmDialog("Error on loading betting data!", "OK");
+            _this.test_value2 = "Error Code : " + error;
             console.log("[Bet.Componenet] GET Betting Result Error : ", error);
         });
-    }
-    getMetaDataInfo() {
+    };
+    BetComponent.prototype.getMetaDataInfo = function () {
+        var _this = this;
         var body = this.baseURL + '/getmetadata';
         console.log("[Bet.Component] Previous Meta Data HTTP : ", body);
-        return this.http.get(body).subscribe(response => {
+        return this.http.get(body).subscribe(function (response) {
             var jsonData = response.json() || {};
             console.log("[Bet.Componenet] GET Meta Data Result Success : ", jsonData);
-            this.setTriggerData(jsonData);
-        }, error => {
-            this.alarmDialog("Error on loading meta data data!", "OK");
-            this.test_value2 = "Error Code : " + error;
+            _this.setTriggerData(jsonData);
+        }, function (error) {
+            _this.alarmDialog("Error on loading meta data data!", "OK");
+            _this.test_value2 = "Error Code : " + error;
             console.log("[Bet.Componenet] GET Meta Data Result Error : ", error);
         });
-    }
-    getAccountDataInfo() {
+    };
+    BetComponent.prototype.getAccountDataInfo = function () {
+        var _this = this;
         var body = this.baseURL + '/getaccountdata';
         console.log("[Bet.Component] Previous Account Data HTTP : ", body);
-        return this.http.get(body).subscribe(response => {
+        return this.http.get(body).subscribe(function (response) {
             var jsonData = response.json() || {};
             console.log("[Bet.Componenet] GET Account Result Success : ", jsonData);
-            this.parseAccountData(jsonData);
-        }, error => {
-            this.alarmDialog("Error on loading account data!", "OK");
-            this.test_value2 = "Error Code : " + error;
+            _this.parseAccountData(jsonData);
+        }, function (error) {
+            _this.alarmDialog("Error on loading account data!", "OK");
+            _this.test_value2 = "Error Code : " + error;
             console.log("[Bet.Componenet] GET Account Result Error : ", error);
         });
-    }
-    parseBetInfo(jsData) {
+    };
+    BetComponent.prototype.parseBetInfo = function (jsData) {
         // // For testing..
         // // For previous data loading..
         // var Selection = {
@@ -1245,8 +1253,8 @@ export let BetComponent = class BetComponent {
         var performanceCharts = previous['performance'];
         console.log("[Bet.Component] Performance Style Parsed Data:", performanceCharts);
         this.getPerformanceData(performanceCharts);
-    }
-    layoutBet(item, dragItem, mcdate) {
+    };
+    BetComponent.prototype.layoutBet = function (item, dragItem, mcdate) {
         console.log("[Bet.Component] Drag Item : ", item, dragItem);
         var component = item[0]; // component info..
         var orderType = item[1]; // order type info..
@@ -1286,8 +1294,8 @@ export let BetComponent = class BetComponent {
             dragObj.orderType = "MOC " + mcdate;
             dragObj.iOrderType = 0;
         }
-    }
-    putBetOnTable(betVal, dragObj, dragItem) {
+    };
+    BetComponent.prototype.putBetOnTable = function (betVal, dragObj, dragItem) {
         var idCol = Math.floor((betVal - 1) / 3);
         var idRow = 2 - ((betVal - 1) % 3);
         // console.log("[Bet.Component] Previous Item Cell For Table : ", betVal, idCol, idRow);
@@ -1301,8 +1309,8 @@ export let BetComponent = class BetComponent {
             }
         }
         dragObj.dragOrder = i;
-    }
-    putBetOnCond(component, dragObj, dragItem, revert) {
+    };
+    BetComponent.prototype.putBetOnCond = function (component, dragObj, dragItem, revert) {
         // Get condition of that component..
         var selCond = -1;
         for (var i = 0; i < this.componentDict.length; i++) {
@@ -1338,8 +1346,8 @@ export let BetComponent = class BetComponent {
             }
             dragObj.dragOrder = i;
         }
-    }
-    setTriggerData(rowData) {
+    };
+    BetComponent.prototype.setTriggerData = function (rowData) {
         // // For testing..
         // var rowData1 = "{\"timestamp\": 1481807880, \"mcdate\": \"20161215\", \"components\": \"{'Anti-Seasonality': ['AntiSEA'], 'Off': ['None'], 'RiskOff': ['RiskOff'], '50/50': ['0.75LastSIG'], 'Custom': ['Custom'], 'Anti50/50': ['Anti0.75LastSIG'], 'LowestEquity': ['0.5LastSIG'], 'AntiHighestEquity': ['Anti1LastSIG'], 'Anti-Custom': ['AntiCustom'], 'Seasonality': ['LastSEA'], 'RiskOn': ['RiskOn'], 'Anti-Previous': ['AntiPrevACT'], 'HighestEquity': ['1LastSIG'], 'AntiLowestEquity': ['Anti0.5LastSIG'], 'Previous': ['prevACT']}\", \"triggers\": \"{u'EMD': {'Date': '20161215', 'Group': u'index', 'Triggertime': u'2016-12-15 16:30'}, u'YM': {'Date': '20161215', 'Group': u'index', 'Triggertime': u'2016-12-15 16:30'}, u'HO': {'Date': '20161215', 'Group': u'energy', 'Triggertime': u'2016-12-15 16:30'}, u'GBP': {'Date': '20161215', 'Group': u'currency', 'Triggertime': u'2016-12-15 16:30'}, u'HG': {'Date': '20161215', 'Group': u'metal', 'Triggertime': u'2016-12-15 16:30'}, u'HE': {'Date': '20161215', 'Group': u'meat', 'Triggertime': u'2016-12-15 13:55'}, u'LE': {'Date': '20161215', 'Group': u'meat', 'Triggertime': u'2016-12-15 13:55'}, u'ZS': {'Date': '20161215', 'Group': u'grain', 'Triggertime': u'2016-12-15 14:05'}, u'NG': {'Date': '20161215', 'Group': u'energy', 'Triggertime': u'2016-12-15 16:30'}, u'PA': {'Date': '20161215', 'Group': u'metal', 'Triggertime': u'2016-12-15 16:30'}, u'RB': {'Date': '20161215', 'Group': u'energy', 'Triggertime': u'2016-12-15 16:30'}, u'NQ': {'Date': '20161215', 'Group': u'index', 'Triggertime': u'2016-12-15 16:30'}, u'CAD': {'Date': '20161215', 'Group': u'currency', 'Triggertime': u'2016-12-15 16:30'}, u'PL': {'Date': '20161215', 'Group': u'metal', 'Triggertime': u'2016-12-15 16:30'}, u'ZL': {'Date': '20161215', 'Group': u'grain', 'Triggertime': u'2016-12-15 14:05'}, u'ZM': {'Date': '20161215', 'Group': u'grain', 'Triggertime': u'2016-12-15 14:05'}, u'ZN': {'Date': '20161215', 'Group': u'debt', 'Triggertime': u'2016-12-15 16:30'}, u'AUD': {'Date': '20161215', 'Group': u'currency', 'Triggertime': u'2016-12-15 16:30'}, u'CHF': {'Date': '20161215', 'Group': u'currency', 'Triggertime': u'2016-12-15 16:30'}, u'CL': {'Date': '20161215', 'Group': u'energy', 'Triggertime': u'2016-12-15 16:30'}, u'ZF': {'Date': '20161215', 'Group': u'debt', 'Triggertime': u'2016-12-15 16:30'}, u'ZB': {'Date': '20161215', 'Group': u'debt', 'Triggertime': u'2016-12-15 16:30'}, u'ZC': {'Date': '20161215', 'Group': u'grain', 'Triggertime': u'2016-12-15 14:05'}, u'GF': {'Date': '20161215', 'Group': u'meat', 'Triggertime': u'2016-12-15 13:55'}, u'GC': {'Date': '20161215', 'Group': u'metal', 'Triggertime': u'2016-12-15 16:30'}, u'NZD': {'Date': '20161215', 'Group': u'currency', 'Triggertime': u'2016-12-15 16:30'}, u'ZT': {'Date': '20161215', 'Group': u'debt', 'Triggertime': u'2016-12-15 16:30'}, u'ZW': {'Date': '20161215', 'Group': u'grain', 'Triggertime': u'2016-12-15 14:05'}, u'ES': {'Date': '20161215', 'Group': u'index', 'Triggertime': u'2016-12-15 16:30'}, u'EUR': {'Date': '20161215', 'Group': u'currency', 'Triggertime': u'2016-12-15 16:30'}, u'MXP': {'Date': '20161215', 'Group': u'currency', 'Triggertime': u'2016-12-15 16:30'}, u'JPY': {'Date': '20161215', 'Group': u'currency', 'Triggertime': u'2016-12-15 16:30'}, u'SI': {'Date': '20161215', 'Group': u'metal', 'Triggertime': u'2016-12-15 16:30'}, u'NIY': {'Date': '20161215', 'Group': u'index', 'Triggertime': u'2016-12-15 16:30'}}\"}";
         // rowData1 = rowData1.replace(/\{u'/g, "\{'");
@@ -1434,8 +1442,8 @@ export let BetComponent = class BetComponent {
             this.triggerData.push(oneTriggerData);
         }
         // console.log("[Bet.Component] Total Arranged Trigger Data ->", this.triggerData);
-    }
-    parseAccountData(rowData) {
+    };
+    BetComponent.prototype.parseAccountData = function (rowData) {
         // // For testing..
         // var rowData1 = "{\"timestamp\": 1481807880, \"mcdate\": \"20161215\", \"value2\": \"{'v4micro': {'col1value': 51447, 'col2title': 'Timestamp', 'col2value': '2016-12-25 12:49:43 AM', 'col1title': 'Account Value'}, 'v4mini': {'col1value': 109655, 'col2title': 'Timestamp', 'col2value': '2016-12-25 12:40:56 AM', 'col1title': 'Account Value'}, 'v4futures': {'col1value': 242863, 'col2title': 'Timestamp', 'col2value': '2016-12-25 04:13:22 AM', 'col1title': 'Account Value'}}\", \"value1\": \"{'v4micro': {'col1value': -5821, 'col2title': 'Timestamp', 'col2value': '2016-12-25 12:49:43 AM', 'col1title': 'UnrealizedPnL'}, 'v4mini': {'col1value': -4165, 'col2title': 'Timestamp', 'col2value': '2016-12-25 12:40:56 AM', 'col1title': 'UnrealizedPnL'}, 'v4futures': {'col1value': -955, 'col2title': 'Timestamp', 'col2value': '2016-12-25 04:13:22 AM', 'col1title': 'UnrealizedPnL'}}\"}";
         // rowData1 = rowData1.replace(/\{u'/g, "\{'");
@@ -1500,11 +1508,11 @@ export let BetComponent = class BetComponent {
             ;
             this.dragAccounts[i].lastUpdate = col2Val;
         }
-    }
-    numberWithCommas(x) {
+    };
+    BetComponent.prototype.numberWithCommas = function (x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-    applyStyle(boxStyles) {
+    };
+    BetComponent.prototype.applyStyle = function (boxStyles) {
         // For off pane..
         var offStyle = boxStyles[0]["c0"];
         this.offCell.bgColor = "#" + offStyle["fill-Hex"];
@@ -1631,9 +1639,9 @@ export let BetComponent = class BetComponent {
             console.log("[Bet.Component] Cell, Style, Key : ", this.chartStyle[idx], style, key, idc);
             idc++;
         }
-    }
+    };
     /*------------------------- For chart purpose ---------------------------------*/
-    getPerformanceData(performanceCharts) {
+    BetComponent.prototype.getPerformanceData = function (performanceCharts) {
         // Read Account Value performance data..
         var actValueJSON = performanceCharts['account_value'];
         var actValueData = {};
@@ -1698,8 +1706,8 @@ export let BetComponent = class BetComponent {
             this.chartData[dictCell.webText] = condValueData;
         }
         console.log("[Bet.Component] Performance Chart Data : ", this.chartData);
-    }
-    performanceChart(type, subType) {
+    };
+    BetComponent.prototype.performanceChart = function (type, subType) {
         this.isChartBox1 = false;
         this.isChartBox2 = false;
         console.log("[Bet.Component] Table Type, SubType -> ", type, subType);
@@ -1726,8 +1734,8 @@ export let BetComponent = class BetComponent {
             this.isChartBox2 = true;
             this.onTabItem(2);
         }
-    }
-    onTabItem(itemID) {
+    };
+    BetComponent.prototype.onTabItem = function (itemID) {
         this.tabID = itemID;
         var idx = itemID - 2;
         // For living..
@@ -1743,7 +1751,7 @@ export let BetComponent = class BetComponent {
             this.chartInfo2[0].rankChartURL = objData[idx + '_rank_file'];
         }
         console.log("[Bet.Component] Performance Chart Data : ", this.curBetPerformance, objData);
-    }
+    };
     // drawChart(type, subtype) {
     //     // // For testing..
     //     // if(type == 1) {                 // For Unrealized PNL value chart..
@@ -1789,99 +1797,100 @@ export let BetComponent = class BetComponent {
     //     }
     // }
     /*------------------------- For general purpose ---------------------------------*/
-    alarmDialog(alarmText, alarmButton) {
+    BetComponent.prototype.alarmDialog = function (alarmText, alarmButton) {
         this.alarmText = alarmText;
         this.alarmOKBtnText = alarmButton;
         this.alarmModal.open();
-    }
-    confirmDialog(confirmText, confirmFlag) {
+    };
+    BetComponent.prototype.confirmDialog = function (confirmText, confirmFlag) {
         this.confirmText = confirmText;
         this.confirmModal.open();
         this.confirmConstant = confirmFlag;
-    }
-    agreeOnConfirm() {
+    };
+    BetComponent.prototype.agreeOnConfirm = function () {
         console.log("[Bet.component] Agree on Confirm Dialog!");
         if (this.confirmConstant == 1) {
             // Send http request for reloading..
             console.log("[Bet.component] Refresh Page!");
             location.reload();
         }
-    }
-};
-__decorate([
-    ViewChild('leftPane'), 
-    __metadata('design:type', ElementRef)
-], BetComponent.prototype, "leftPane", void 0);
-__decorate([
-    ViewChild('betbox'), 
-    __metadata('design:type', ElementRef)
-], BetComponent.prototype, "betBox", void 0);
-__decorate([
-    ViewChild('rightPane'), 
-    __metadata('design:type', ElementRef)
-], BetComponent.prototype, "rightPane", void 0);
-__decorate([
-    ViewChild('bottomBlank'), 
-    __metadata('design:type', ElementRef)
-], BetComponent.prototype, "bottomBlank", void 0);
-__decorate([
-    ViewChild('bottomPane'), 
-    __metadata('design:type', ElementRef)
-], BetComponent.prototype, "bottomPane", void 0);
-__decorate([
-    ViewChild('bottomCell'), 
-    __metadata('design:type', ElementRef)
-], BetComponent.prototype, "bottomCell", void 0);
-__decorate([
-    ViewChild('betCell'), 
-    __metadata('design:type', ElementRef)
-], BetComponent.prototype, "betCell", void 0);
-__decorate([
-    ViewChild('betAccount'), 
-    __metadata('design:type', ElementRef)
-], BetComponent.prototype, "betAccount", void 0);
-__decorate([
-    ViewChild('betAccountObj'), 
-    __metadata('design:type', ElementRef)
-], BetComponent.prototype, "betAccountObj", void 0);
-__decorate([
-    ViewChild('nextTriggerTimePane'), 
-    __metadata('design:type', ElementRef)
-], BetComponent.prototype, "nextTriggerTimePane", void 0);
-__decorate([
-    ViewChild('curYearPane'), 
-    __metadata('design:type', ElementRef)
-], BetComponent.prototype, "curYearPane", void 0);
-__decorate([
-    ViewChild('curTimePane'), 
-    __metadata('design:type', ElementRef)
-], BetComponent.prototype, "curTimePane", void 0);
-__decorate([
-    ViewChild('timeZonePane'), 
-    __metadata('design:type', ElementRef)
-], BetComponent.prototype, "timeZonePane", void 0);
-__decorate([
-    ViewChild('cfgModalVote'), 
-    __metadata('design:type', ModalComponent)
-], BetComponent.prototype, "cfgModalVote", void 0);
-__decorate([
-    ViewChild('cfgModalOff'), 
-    __metadata('design:type', ModalComponent)
-], BetComponent.prototype, "cfgModalOff", void 0);
-__decorate([
-    ViewChild('alarmModal'), 
-    __metadata('design:type', ModalComponent)
-], BetComponent.prototype, "alarmModal", void 0);
-__decorate([
-    ViewChild('confirmModal'), 
-    __metadata('design:type', ModalComponent)
-], BetComponent.prototype, "confirmModal", void 0);
-BetComponent = __decorate([
-    Component({
-        // moduleId : module.id,
-        selector: 'relative-path',
-        templateUrl: 'bet.component.html',
-        styleUrls: ['bet.component.css']
-    }), 
-    __metadata('design:paramtypes', [Router, Http])
-], BetComponent);
+    };
+    __decorate([
+        core_1.ViewChild('leftPane'), 
+        __metadata('design:type', core_1.ElementRef)
+    ], BetComponent.prototype, "leftPane", void 0);
+    __decorate([
+        core_1.ViewChild('betbox'), 
+        __metadata('design:type', core_1.ElementRef)
+    ], BetComponent.prototype, "betBox", void 0);
+    __decorate([
+        core_1.ViewChild('rightPane'), 
+        __metadata('design:type', core_1.ElementRef)
+    ], BetComponent.prototype, "rightPane", void 0);
+    __decorate([
+        core_1.ViewChild('bottomBlank'), 
+        __metadata('design:type', core_1.ElementRef)
+    ], BetComponent.prototype, "bottomBlank", void 0);
+    __decorate([
+        core_1.ViewChild('bottomPane'), 
+        __metadata('design:type', core_1.ElementRef)
+    ], BetComponent.prototype, "bottomPane", void 0);
+    __decorate([
+        core_1.ViewChild('bottomCell'), 
+        __metadata('design:type', core_1.ElementRef)
+    ], BetComponent.prototype, "bottomCell", void 0);
+    __decorate([
+        core_1.ViewChild('betCell'), 
+        __metadata('design:type', core_1.ElementRef)
+    ], BetComponent.prototype, "betCell", void 0);
+    __decorate([
+        core_1.ViewChild('betAccount'), 
+        __metadata('design:type', core_1.ElementRef)
+    ], BetComponent.prototype, "betAccount", void 0);
+    __decorate([
+        core_1.ViewChild('betAccountObj'), 
+        __metadata('design:type', core_1.ElementRef)
+    ], BetComponent.prototype, "betAccountObj", void 0);
+    __decorate([
+        core_1.ViewChild('nextTriggerTimePane'), 
+        __metadata('design:type', core_1.ElementRef)
+    ], BetComponent.prototype, "nextTriggerTimePane", void 0);
+    __decorate([
+        core_1.ViewChild('curYearPane'), 
+        __metadata('design:type', core_1.ElementRef)
+    ], BetComponent.prototype, "curYearPane", void 0);
+    __decorate([
+        core_1.ViewChild('curTimePane'), 
+        __metadata('design:type', core_1.ElementRef)
+    ], BetComponent.prototype, "curTimePane", void 0);
+    __decorate([
+        core_1.ViewChild('timeZonePane'), 
+        __metadata('design:type', core_1.ElementRef)
+    ], BetComponent.prototype, "timeZonePane", void 0);
+    __decorate([
+        core_1.ViewChild('cfgModalVote'), 
+        __metadata('design:type', ng2_bs3_modal_1.ModalComponent)
+    ], BetComponent.prototype, "cfgModalVote", void 0);
+    __decorate([
+        core_1.ViewChild('cfgModalOff'), 
+        __metadata('design:type', ng2_bs3_modal_1.ModalComponent)
+    ], BetComponent.prototype, "cfgModalOff", void 0);
+    __decorate([
+        core_1.ViewChild('alarmModal'), 
+        __metadata('design:type', ng2_bs3_modal_1.ModalComponent)
+    ], BetComponent.prototype, "alarmModal", void 0);
+    __decorate([
+        core_1.ViewChild('confirmModal'), 
+        __metadata('design:type', ng2_bs3_modal_1.ModalComponent)
+    ], BetComponent.prototype, "confirmModal", void 0);
+    BetComponent = __decorate([
+        core_1.Component({
+            // moduleId : module.id,
+            selector: 'relative-path',
+            template: bet_component_html_1.htmlTemplate
+        }), 
+        __metadata('design:paramtypes', [router_1.Router, http_1.Http])
+    ], BetComponent);
+    return BetComponent;
+}());
+exports.BetComponent = BetComponent;

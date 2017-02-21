@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7,32 +8,36 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule } from '@angular/http';
-import { FormsModule } from '@angular/forms';
-import { DndModule } from 'ng2-dnd';
-import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
-import { AppComponent } from './components/app.component';
-import { AppRouterModule } from './app-router.module';
-import { BetComponent } from './components/bet/bet.component';
-export let AppModule = class AppModule {
-};
-AppModule = __decorate([
-    NgModule({
-        imports: [
-            BrowserModule,
-            FormsModule,
-            AppRouterModule,
-            HttpModule,
-            DndModule.forRoot(),
-            Ng2Bs3ModalModule,
-        ],
-        declarations: [
-            AppComponent,
-            BetComponent
-        ],
-        bootstrap: [AppComponent]
-    }), 
-    __metadata('design:paramtypes', [])
-], AppModule);
+var core_1 = require('@angular/core');
+var platform_browser_1 = require('@angular/platform-browser');
+var http_1 = require('@angular/http');
+var forms_1 = require('@angular/forms');
+var ng2_dnd_1 = require('ng2-dnd');
+var ng2_bs3_modal_1 = require('ng2-bs3-modal/ng2-bs3-modal');
+var app_component_1 = require('./components/app.component');
+var app_router_module_1 = require('./app-router.module');
+var bet_component_1 = require('./components/bet/bet.component');
+var AppModule = (function () {
+    function AppModule() {
+    }
+    AppModule = __decorate([
+        core_1.NgModule({
+            imports: [
+                platform_browser_1.BrowserModule,
+                forms_1.FormsModule,
+                app_router_module_1.AppRouterModule,
+                http_1.HttpModule,
+                ng2_dnd_1.DndModule.forRoot(),
+                ng2_bs3_modal_1.Ng2Bs3ModalModule,
+            ],
+            declarations: [
+                app_component_1.AppComponent,
+                bet_component_1.BetComponent
+            ],
+            bootstrap: [app_component_1.AppComponent]
+        }), 
+        __metadata('design:paramtypes', [])
+    ], AppModule);
+    return AppModule;
+}());
+exports.AppModule = AppModule;
