@@ -79,6 +79,7 @@ class UserSelection(models.Model):
     def __str__(self):
         return self.selection
 
+'''
 class MetaData(models.Model):
     components = models.TextField()
     triggers = models.TextField()
@@ -111,3 +112,4 @@ class AccountData(models.Model):
 
     def __str__(self):
         return self.mcdate
+'''

@@ -8,7 +8,7 @@ from pytz import timezone
 from tzlocal import get_localzone
 import sqlite3
 import pandas as pd
-from .models import MetaData, AccountData, UserSelection
+from .models import UserSelection
 import calendar
 import numpy as np
 import re
@@ -17,6 +17,30 @@ def getBackendDB():
     dbPath = 'futures.sqlite3'
     readConn = sqlite3.connect(dbPath)
     return readConn
+
+def getChartDB():
+    dbPath = 'db_charts.sqlite3'
+    readConn = sqlite3.connect(dbPath)
+    return readConn
+
+def getTables(dbconn):
+    dbcur = dbconn.cursor()
+    dbcur.execute("SELECT name FROM sqlite_master WHERE type='table';")
+    #dbcur.execute("PRAGMA table_info(table-name);")
+    tables=[x[0] for x in dbcur.fetchall()]
+    dbcur.close()
+    return tables
+
+def getChartsDict():
+    readConn=getChartDB()
+    tables=getTables(readConn)
+    chart_table_dict={}
+    for table in tables:
+        df = pd.read_sql('select * from {}'.format(table), con=readConn)
+        print table, 'index:', df.columns[0]
+        df=df.set_index(df.columns[0])
+        chart_table_dict[table]=df.to_dict()
+    return chart_table_dict
 
 class LoginForm(forms.Form):
     username = forms.CharField(label='User Name', max_length=64)
@@ -201,16 +225,52 @@ def getAccountValues():
           (select max(timestamp) from c2_portfolio where system=\'v4futures\')', con=readConn)
     '''
     
-    record = AccountData(value1=json.dumps(urpnls), value2=json.dumps(accountvalues),mcdate=mcdate,\
-                                    timestamp=getTimeStamp())
-    record.save()
+    #record = AccountData(value1=json.dumps(urpnls), value2=json.dumps(accountvalues),mcdate=mcdate,\
+    #                                timestamp=getTimeStamp())
+    #record.save()
+    accountdata={'value1':json.dumps(urpnls), 'value2':json.dumps(accountvalues),'mcdate':mcdate,\
+                                    'timestamp':getTimeStamp()}
+    return accountdata
+
+
+def getCustomSignals():
+    readConn=getBackendDB()
+    lastdate= pd.read_sql('select distinct Date from futuresATRhist',\
+                          con=readConn).Date.tolist()[-1]
+    futuresDF=pd.read_sql('select * from (select * from futuresATRhist\
+                                          where Date=%s\
+                    order by timestamp ASC) group by CSIsym'%lastdate,\
+                        con=readConn,  index_col='CSIsym')
+
+    futuresDict = pd.read_sql('select * from Dictionary', con=readConn,\
+                              index_col='CSIsym')
+
+    desc_list = futuresDict.ix[futuresDF.index].Desc.values
+    desc_hyperlink = [re.sub(r'\(.*?\)', '', desc) for desc in desc_list]
+    desc_hyperlink = ['<a href="/static/images/v4_' + [futuresDict.index[i]\
+                           for i, desc in enumerate(futuresDict.Desc) \
+                  if re.sub(r'-[^-]*$', '', x) in desc][0] + \
+                '_BRANK.png" target="_blank">' + x + '</a>' \
+                for x in desc_hyperlink]
+    df=pd.DataFrame(data=dict(signals=futuresDF.Custom.values,\
+                              group=futuresDF.group.values,\
+                              desc=desc_hyperlink), index=futuresDF.index)
+
+    customsignals=df.sort_values(by=['group']).transpose().to_json()
+    return customsignals
+
 
 def checkImmediateOrders():
     time.sleep(10)
     pass
 
-def recreateCharts(custom_signals=False):
-    if custom_signals:
+def recreateCharts(custom_signals=None):
+    if custom_signals is not None:
+        filename='custom_signals_data.json'
+        with open(filename, 'w') as f:
+            json.dump(custom_signals, f)
+        print 'Saved', filename
+        print('updating custom signals')
         #script to run vol_adjsize, vol_adjsize_moclive_func
         pass
 
@@ -445,6 +505,7 @@ def get_status():
     readConn = getBackendDB()
     futuresDict = pd.read_sql('select * from Dictionary', con=readConn, index_col='C2sym')
     futuresDict2 = pd.read_sql('select * from Dictionary', con=readConn, index_col='CSIsym')
+
     #col_order = ['broker', 'account', 'contract', 'description', 'openedWhen', 'urpnl', \
     #             'broker_position', 'broker_qty', 'signal_check', 'qty_check', 'selection', 'order_type']
     #col_order_ib = ['desc', 'contracts', 'qty', 'price', 'value', 'avg_cost', 'unr_pnl', 'real_pnl', 'accountid',
@@ -488,7 +549,7 @@ def get_status():
         orderstatus_dict[account]['pnl_text']='This table displays the details of your open positions in your account portfolio.<br><br>Last Update: '+str(timestamp)
         csidate = pd.read_sql('select distinct csiDate from slippage where Name=\'{}\''.format(account), con=readConn).csiDate.tolist()[-1]
         orderstatus_dict[account]['slippage']=pngPath+account+'_c2_slippage_'+str(csidate)+'.png'
-        orderstatus_dict[account]['slippage_text']='The slippage graph shows the datetime your last orders were entered and how much it differs from the official close price.<br><br>Last Update: '+str(timestamp)
+        orderstatus_dict[account]['slippage_text']='The slippage graph shows the datetime your last orders were entered and how much it differs from the official close price. With immediate orders slippage will show the net loss/gain you get from entering earlier than at the MOC<br><br>Last Update: '+str(timestamp)
         if account == "v4futures":
             df = pd.read_sql('select * from (select * from %s\
                     order by timestamp ASC) group by ibsym' % ('checkSystems_ib_' + account), \
@@ -510,6 +571,6 @@ def get_status():
                                   con=readConn).Date.tolist()[-1]
             #slippage_files[account+'_ib'] = str(csidate)
             orderstatus_dict[account]['slippage'] = pngPath+account + '_ib_slippage_' + str(csidate) + '.png'
-            orderstatus_dict[account]['slippage_text']='The slippage graph shows the datetime your last orders were entered and how much it differs from the official close price.<br><br>Last Update: ' + str(
+            orderstatus_dict[account]['slippage_text']='The slippage graph shows the datetime your last orders were entered and how much it differs from the official close price. With immediate orders slippage will show the net loss/gain you get from entering earlier than at the MOC<br><br>Last Update: ' + str(
                 timestamp)
     return orderstatus_dict

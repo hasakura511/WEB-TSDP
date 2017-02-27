@@ -44,6 +44,41 @@ for account in ai_dict:
 images=listdir('./betting/static/public/images/')
 chip_images=filter(lambda x: 'chip_' in x, images)
 
+desc_list = futuresDict.ix[futuresDF.index].Desc.values
+desc_hyperlink = [re.sub(r'\(.*?\)', '', desc) for desc in desc_list]
+desc_hyperlink = ['<a href="/static/images/v4_' + [futuresDict.index[i]\
+                       for i, desc in enumerate(futuresDict.Desc) \
+              if re.sub(r'-[^-]*$', '', x) in desc][0] + \
+            '_BRANK.png" target="_blank">' + x + '</a>' \
+            for x in desc_hyperlink]
+markets_df=pd.concat([futuresDF[['usdATR','QTY','QTY_MINI','QTY_MICRO',\
+                    'group']],feeddata[['Desc','margin']]],\
+                    axis=1).sort_values(by=['group'])
+desc_list = markets_df.Desc.values
+desc_hyperlink = [re.sub(r'\(.*?\)', '', desc) for desc in desc_list]
+desc_hyperlink = ['<a href="/static/images/v4_' + [futuresDict.index[i]\
+                       for i, desc in enumerate(futuresDict.Desc) \
+              if re.sub(r'-[^-]*$', '', x) in desc][0] + \
+            '_BRANK.png" target="_blank">' + x + '</a>' \
+            for x in desc_hyperlink]
+markets_df['Desc']=desc_hyperlink
+
+for account in ai_dict:
+    markets_df[account]=[False if sym in ai_dict[account]['offline']\
+               else True for sym in markets_df.index]
+ai_dict2={account:{key:value for key,value in dic.items() if key\
+                   not in ['selection','offline']} for account, dic\
+                    in ai_dict.items()}
+    
+markets_df=markets_df.transpose()
+json_markets_df=markets_df.to_json()
+modify_chip_dict={
+        'accountinfo':ai_dict2,
+       'chip_images':chip_images,
+       'json_markets':json_markets_df
+        
+        }
+
 
 '''
 lastdate= pd.read_sql('select distinct Date from futuresATRhist',\

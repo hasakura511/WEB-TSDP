@@ -113,12 +113,13 @@ def board(request):
     '''
     # Please wait 10-15 minutes for the charts to be recreated.
     if selections[0].dic()['componentloc']!=selections[1].dic()['componentloc'] or\
-            request.GET['custom_signals']=='True':
-        if request.GET['custom_signals']=='True':
+            request.GET['custom_signals']!='False':
+        if request.GET['custom_signals']!='False':
             print('New Custom Signals Found')
+            recreateCharts(custom_signals=request.GET['custom_signals'])
         else:
             print('New Board config found')
-        recreateCharts()
+            recreateCharts()
     '''
     return render(request, 'index.html', {})
 
@@ -133,9 +134,9 @@ def getmetadata(request):
     return HttpResponse(json.dumps(returndata))
 
 def getaccountdata(request):
-    getAccountValues()
-    returnrec = AccountData.objects.order_by('-timestamp').first()
-    returndata = returnrec.dic()
+    #returnrec = AccountData.objects.order_by('-timestamp').first()
+    #returndata = returnrec.dic()
+    returndata= getAccountValues()    
     print(returndata)
     return HttpResponse(json.dumps(returndata))
 
@@ -144,9 +145,19 @@ def gettimetable(request):
     print(returndata)
     return HttpResponse(json.dumps(returndata))
 
+def getcustomsignals(request):
+    returndata = getCustomSignals()
+    print(returndata)
+    return HttpResponse(returndata)
+
 def getstatus(request):
     returndata = get_status()
     print(returndata)
+    return HttpResponse(json.dumps(returndata))
+
+def getchartdata(request):
+    returndata = getChartsDict()
+    #print(returndata)
     return HttpResponse(json.dumps(returndata))
 
 def profile(request, username):
