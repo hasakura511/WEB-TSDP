@@ -32,8 +32,8 @@ def addrecord(request):
     #if list_boxstyles != []:
     #   #create new boxstyles json
     #   get_blends(cloc=cloc, list_boxstyles=list_boxstyles)
-
-    votingComponents=get_blends(cloc=cloc, returnVotingComponents=True)
+    votingComponents=get_blends(returnVotingComponents=True)
+    #votingComponents=get_blends(cloc=cloc, returnVotingComponents=True)
 
     record = UserSelection(userID=request.GET['user_id'], selection=request.GET['Selection'], \
                             v4futures=json.dumps(votingComponents), v4mini=json.dumps(votingComponents), \
@@ -100,6 +100,7 @@ def getrecords(request):
     recentdata = [dict((cn, getattr(data, cn)) for cn in ('timestamp', 'mcdate', 'selection')) for data in recent]
     returndata={"first": firstdata, "recent": recentdata}
     #print(returndata)
+    print len(returndata)
     return HttpResponse(json.dumps(returndata))
 
 
@@ -107,9 +108,10 @@ def board(request):
     selections = UserSelection.objects.all().order_by('-timestamp')
 
     # Please wait up to five minutes for immediate orders to be processed.
-    if 'True' in [order[1] for sys, order in eval(selections[0].selection).items()]:
-        print('Immediate Orders found')
-        checkImmediateOrders()
+    if len(selections)>0:
+        if 'True' in [order[1] for sys, order in eval(selections[0].selection).items()]:
+            print('Immediate Orders found')
+            checkImmediateOrders()
     '''
     # Please wait 10-15 minutes for the charts to be recreated.
     if selections[0].dic()['componentloc']!=selections[1].dic()['componentloc'] or\
@@ -130,34 +132,40 @@ def getmetadata(request):
     #returnrec = MetaData.objects.order_by('-timestamp').first()
     #returndata = returnrec.dic()
     returndata=updateMeta()
-    print(returndata)
+    #print(returndata)
+    print len(returndata)
     return HttpResponse(json.dumps(returndata))
 
 def getaccountdata(request):
     #returnrec = AccountData.objects.order_by('-timestamp').first()
     #returndata = returnrec.dic()
     returndata= getAccountValues()    
-    print(returndata)
+    #print(returndata)
+    print len(returndata)
     return HttpResponse(json.dumps(returndata))
 
 def gettimetable(request):
     returndata = get_timetables()
-    print(returndata)
+    #print(returndata)
+    print len(returndata)
+    return HttpResponse(json.dumps(returndata))
+
+def getstatus(request):
+    returndata = get_status()
+    #print(returndata)
+    print len(returndata)
     return HttpResponse(json.dumps(returndata))
 
 def getcustomsignals(request):
     returndata = getCustomSignals()
-    print(returndata)
+    #print(returndata)
+    print len(returndata)
     return HttpResponse(returndata)
-
-def getstatus(request):
-    returndata = get_status()
-    print(returndata)
-    return HttpResponse(json.dumps(returndata))
 
 def getchartdata(request):
     returndata = getChartsDict()
     #print(returndata)
+    print len(returndata)
     return HttpResponse(json.dumps(returndata))
 
 def profile(request, username):

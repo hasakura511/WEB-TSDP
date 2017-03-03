@@ -23,6 +23,12 @@ def getChartDB():
     readConn = sqlite3.connect(dbPath)
     return readConn
 
+def getNews():
+    with open('news.txt','r') as f:
+        newslines=f.readlines()    
+        #print newslines    
+    return newslines
+    
 def getTables(dbconn):
     dbcur = dbconn.cursor()
     dbcur.execute("SELECT name FROM sqlite_master WHERE type='table';")

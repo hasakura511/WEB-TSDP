@@ -1,2 +1,37 @@
-Mon, 2/20* NoneTues, 2/21* None
-Wed, 2/22* GBP Gross Domestic Product (YoY) (4Q P)Thurs, 2/23* USD FOMC Meeting Minutes (FEB 01)Fri, 2/24* CAD Consumer Price Index (YoY) (JAN)
+---------------------------
+Major economic news for Mon, 2/27
+USD Durable Goods Orders (JAN P) 1.8% vs 1.6%
+Major economic news for Tues, 2/28
+President Donald Trump's first speech to Congress.
+EUR Euro-Zone Consumer Price Index - Core (YoY) (FEB A)
+USD Advance Goods Trade Balance (JAN)
+USD Consumer Confidence (FEB)	
+Major economic news for Wed, 3/1
+EUR German Unemployment Change (FEB)	
+EUR German Consumer Price Index (YoY) (FEB P)
+USD Personal Consumption Expenditure Core (YoY) (JAN)
+USD ISM Manufacturing (FEB)
+Major economic news for Thurs, 3/2
+CAD GDP (YoY) (DEC)
+CHF Gross Domestic Product (YoY) (4Q)
+Major economic news for Fri, 3/3
+JPY National Consumer Price Index (YoY) (JAN)
+USD ISM Services/Non-Manufacturing Composite (FEB)	
+--------------------------
+Major economic news for Mon, 3/6
+None
+
+Major economic news for Tues, 3/7
+AUD Reserve Bank of Australia Rate Decision (MAR 07)
+
+Major economic news for Wed, 3/8
+JPY Gross Domestic Product Annualized (4Q F)
+
+Major economic news for Thurs, 3/9
+EUR European Central Bank Rate Decision (MAR 09)
+
+Major economic news for Fri, 3/10
+CAD Unemployment Rate (FEB)
+USD Change in Non-farm Payrolls (FEB)
+
+--------------------------
